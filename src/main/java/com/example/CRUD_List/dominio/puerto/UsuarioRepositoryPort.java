@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.example.CRUD_List.dominio.modelo.Usuario;
 
 public interface UsuarioRepositoryPort {
-    void guardar(Usuario usuario);
+    Usuario guardar(Usuario usuario);
     Optional<Usuario> buscarPorId(UUID id);
     List<Usuario> listarTodos();
 }

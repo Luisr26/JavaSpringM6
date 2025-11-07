@@ -10,17 +10,17 @@ import java.util.UUID;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final CrearUsuarioUseCase crearUsuario;
+    private final CrearUsuarioUseCase crearUser;
     private final ObtenerUsuarioUseCase obtenerUsuario;
 
-    public UsuarioController(CrearUsuarioUseCase crearUsuario, ObtenerUsuarioUseCase obtenerUsuario) {
-        this.crearUsuario = crearUsuario;
+    public UsuarioController(CrearUsuarioUseCase crearUser, ObtenerUsuarioUseCase obtenerUsuario) {
+        this.crearUser = crearUser;
         this.obtenerUsuario = obtenerUsuario;
     }
 
     @PostMapping
-    public Usuario crear(@RequestBody Usuario usuario) {
-        return crearUsuario.crearUsuario(usuario);
+    public Usuario crear(@RequestBody UUID id, String name, String cargo, String telefono) {
+        return crearUser.crearUsuario(id, name, cargo, telefono);
     }
 
     @GetMapping("/{id}")
