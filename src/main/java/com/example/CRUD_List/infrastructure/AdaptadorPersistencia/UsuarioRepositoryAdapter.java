@@ -23,8 +23,9 @@ public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort {
     public Usuario guardar(Usuario usuario) {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setId(usuario.getId());
-        entity.setNombre(usuario.getNombre());
-        entity.setEmail(usuario.getEmail());
+        entity.setName(usuario.getName());
+        entity.setCargo(usuario.getCargo());
+        entity.setTelefono(usuario.getTelefono());
         jpaRepo.save(entity);
         return usuario;
     }
@@ -32,13 +33,13 @@ public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort {
     @Override
     public Optional<Usuario> buscarPorId(UUID id) {
         return jpaRepo.findById(id)
-                .map(e -> new Usuario(e.getId(), e.getNombre(), e.getEmail()));
+                .map(e -> new Usuario(e.getId(), e.getName(), e.getCargo(), e.getTelefono()));
     }
 
     @Override
     public List<Usuario> listarTodos() {
         return jpaRepo.findAll().stream()
-                .map(e -> new Usuario(e.getId(), e.getNombre(), e.getEmail()))
+                .map(e -> new Usuario(e.getId(), e.getName(), e.getCargo(), e.getTelefono()))
                 .toList();
     }
 }

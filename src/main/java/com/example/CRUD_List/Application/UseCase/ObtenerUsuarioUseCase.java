@@ -1,14 +1,14 @@
 package com.example.CRUD_List.Application.UseCase;
-import com.example.CRUD_List.dominio.puerto.UsuarioRepositorioPort;
+import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
 import com.example.CRUD_List.dominio.modelo.Usuario;
 
 import java.util.UUID;
 
 public class ObtenerUsuarioUseCase {
 
-    private final UsuarioRepositorioPort usuarioRepositorio;
+    private final UsuarioRepositoryPort usuarioRepositorio;
 
-    public ObtenerUsuarioUseCase(UsuarioRepositorioPort usuarioRepositorio) {
+    public ObtenerUsuarioUseCase(UsuarioRepositoryPort usuarioRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
     }
 
