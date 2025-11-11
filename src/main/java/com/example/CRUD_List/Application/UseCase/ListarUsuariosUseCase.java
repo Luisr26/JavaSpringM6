@@ -1,6 +1,6 @@
 package com.example.CRUD_List.Application.UseCase;
 
-import java.util.UUID;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -8,16 +8,16 @@ import com.example.CRUD_List.dominio.modelo.Usuario;
 import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
 
 @Service
-public class CrearUsuarioUseCase {
+public class ListarUsuariosUseCase {
+    
     private final UsuarioRepositoryPort usuarioRepositorioPort;
 
-    public CrearUsuarioUseCase(UsuarioRepositoryPort usuarioRepositorioPort) {
+    public ListarUsuariosUseCase(UsuarioRepositoryPort usuarioRepositorioPort) {
         this.usuarioRepositorioPort = usuarioRepositorioPort;
     }
 
-    public Usuario ejecutar(UUID id, String name, String cargo, String telefono) {
-        Usuario usuario = new Usuario(id, name, cargo, telefono);
-        usuarioRepositorioPort.guardar(usuario);
-        return usuario;
+    public List<Usuario> ejecutar() {
+        return usuarioRepositorioPort.listarTodos();
     }
 }
+
