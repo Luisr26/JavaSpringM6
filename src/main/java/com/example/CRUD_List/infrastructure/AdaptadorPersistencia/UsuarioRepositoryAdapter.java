@@ -3,9 +3,8 @@ package com.example.CRUD_List.infrastructure.AdaptadorPersistencia;
 import org.springframework.stereotype.Component;
 import com.example.CRUD_List.dominio.modelo.Usuario;
 import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
-import com.example.CRUD_List.infrastructure.entidad.UsuarioEntity;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,33 +12,29 @@ import java.util.UUID;
 @Component
 public class UsuarioRepositoryAdapter implements UsuarioRepositoryPort {
 
-    private final JpaUsuarioRepository jpaRepo;
+    // Almacenamiento en memoria usando ArrayList
+    private final List<Usuario> usuarios = new ArrayList<>();
 
-    public UsuarioRepositoryAdapter(JpaUsuarioRepository jpaRepo) {
-        this.jpaRepo = jpaRepo;
+    public UsuarioRepositoryAdapter() {
     }
 
     @Override
     public Usuario guardar(Usuario usuario) {
-        UsuarioEntity entity = new UsuarioEntity();
-        entity.setId(usuario.getId());
-        entity.setName(usuario.getName());
-        entity.setCargo(usuario.getCargo());
-        entity.setTelefono(usuario.getTelefono());
-        jpaRepo.save(entity);
+        // Si el usuario ya existe (mismo ID), lo reemplazamos
+        usuarios.removeIf(u -> u.getId().equals(usuario.getId()));
+        usuarios.add(usuario);
         return usuario;
     }
 
     @Override
     public Optional<Usuario> buscarPorId(UUID id) {
-        return jpaRepo.findById(id)
-                .map(e -> new Usuario(e.getId(), e.getName(), e.getCargo(), e.getTelefono()));
+        return usuarios.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst();
     }
 
     @Override
     public List<Usuario> listarTodos() {
-        return jpaRepo.findAll().stream()
-                .map(e -> new Usuario(e.getId(), e.getName(), e.getCargo(), e.getTelefono()))
-                .toList();
+        return new ArrayList<>(usuarios);
     }
 }

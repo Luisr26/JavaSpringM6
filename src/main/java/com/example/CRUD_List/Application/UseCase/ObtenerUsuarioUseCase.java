@@ -4,6 +4,9 @@ import com.example.CRUD_List.dominio.modelo.Usuario;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ObtenerUsuarioUseCase {
 
     private final UsuarioRepositoryPort usuarioRepositorio;
@@ -12,7 +15,7 @@ public class ObtenerUsuarioUseCase {
         this.usuarioRepositorio = usuarioRepositorio;
     }
 
-    public Usuario obtenerUsuarioPorId(UUID id) {
+    public Usuario ejecutar(UUID id) {
         return usuarioRepositorio.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
     }
