@@ -24,7 +24,7 @@ public class DatabaseUserRepository implements UsuarioRepositoryPort {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setObject(1, usuario.getId()); 
+            stmt.setString(1, usuario.getId().toString()); 
             stmt.setString(2, usuario.getName());
             stmt.setString(3, usuario.getCargo());
             stmt.setString(4, usuario.getTelefono());
@@ -42,13 +42,13 @@ public class DatabaseUserRepository implements UsuarioRepositoryPort {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setObject(1, id);
+            stmt.setString(1, id.toString());
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 // Ajustar al constructor actual de Usuario (id, name, cargo, telefono)
                 Usuario usuario = new Usuario(
-                    (UUID) rs.getObject("id"),
+                    UUID.fromString(rs.getString("id")),
                     rs.getString("name"),
                     rs.getString("cargo"),
                     rs.getString("telefono")
@@ -72,7 +72,7 @@ public class DatabaseUserRepository implements UsuarioRepositoryPort {
 
             while (rs.next()) {
                 usuarios.add(new Usuario(
-                    (UUID) rs.getObject("id"),
+                    UUID.fromString(rs.getString("id")),
                     rs.getString("name"),
                     rs.getString("cargo"),
                     rs.getString("telefono")
@@ -94,7 +94,7 @@ public class DatabaseUserRepository implements UsuarioRepositoryPort {
         String sql = "DELETE FROM usuarios WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setObject(1, id);
+            stmt.setString(1, id.toString());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
