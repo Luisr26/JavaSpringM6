@@ -62,6 +62,8 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
+        
+        <!-- NOTE: MySQL connector moved to a Maven profile (see below). -->
     </dependencies>
 
     <build>
@@ -72,5 +74,23 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Profile to enable MySQL runtime dependency when needed. -->
+    <profiles>
+        <profile>
+            <id>mysql</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
+                    <version>8.0.33</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>
