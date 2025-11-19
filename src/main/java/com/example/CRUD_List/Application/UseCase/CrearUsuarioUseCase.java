@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
+import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
 
 @Service
 public class CrearUsuarioUseCase {

@@ -1,104 +1,66 @@
 package com.example.CRUD_List.infrastructure.AdaptadorPersistencia;
 
 import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
+import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
 
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
-import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class DatabaseUserRepository implements UsuarioRepositoryPort {
-    private final DataSource dataSource;
+    private final SpringDataUsuarioRepository springDataUsuarioRepository;
 
-    public DatabaseUserRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public DatabaseUserRepository(SpringDataUsuarioRepository springDataUsuarioRepository) {
+        this.springDataUsuarioRepository = springDataUsuarioRepository;
     }
 
     @Override
     public Usuario guardar(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (id, name, cargo, telefono) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, usuario.getId().toString()); 
-            stmt.setString(2, usuario.getName());
-            stmt.setString(3, usuario.getCargo());
-            stmt.setString(4, usuario.getTelefono());
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return usuario;
+        UsuarioEntity entity = toEntity(usuario);
+        UsuarioEntity savedEntity = springDataUsuarioRepository.save(entity);
+        return toDomain(savedEntity);
     }
 
     @Override
     public Optional<Usuario> buscarPorId(UUID id) {
-        String sql = "SELECT * FROM usuarios WHERE id = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, id.toString());
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                // Ajustar al constructor actual de Usuario (id, name, cargo, telefono)
-                Usuario usuario = new Usuario(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"),
-                    rs.getString("cargo"),
-                    rs.getString("telefono")
-                );
-                return Optional.of(usuario);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        return springDataUsuarioRepository.findById(id.toString())
+                .map(this::toDomain);
     }
 
     @Override
     public List<Usuario> listarTodos() {
-        List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM usuarios";
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                usuarios.add(new Usuario(
-                    UUID.fromString(rs.getString("id")),
-                    rs.getString("name"),
-                    rs.getString("cargo"),
-                    rs.getString("telefono")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return usuarios;
+        return springDataUsuarioRepository.findAll()
+                .stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Usuario elimUsuario(UUID id) {
-        // Intentamos obtener el usuario antes de eliminar para devolverlo
-        Optional<Usuario> opt = buscarPorId(id);
-        if (opt.isEmpty()) {
-            return null;
+        Optional<UsuarioEntity> entity = springDataUsuarioRepository.findById(id.toString());
+        if (entity.isPresent()) {
+            springDataUsuarioRepository.deleteById(id.toString());
+            return toDomain(entity.get());
         }
-        String sql = "DELETE FROM usuarios WHERE id = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, id.toString());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return opt.get();
+        return null;
+    }
+
+    // Mappers: Domain <-> Entity
+    private UsuarioEntity toEntity(Usuario usuario) {
+        return new UsuarioEntity(
+                usuario.getId().toString(),
+                usuario.getName(),
+                usuario.getCargo(),
+                usuario.getTelefono());
+    }
+
+    private Usuario toDomain(UsuarioEntity entity) {
+        return new Usuario(
+                UUID.fromString(entity.getId()),
+                entity.getName(),
+                entity.getCargo(),
+                entity.getTelefono());
     }
 }

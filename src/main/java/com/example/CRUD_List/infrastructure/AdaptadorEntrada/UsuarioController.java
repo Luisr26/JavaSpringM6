@@ -2,6 +2,8 @@ package com.example.CRUD_List.infrastructure.AdaptadorEntrada;
 import com.example.CRUD_List.Application.UseCase.CrearUsuarioUseCase;
 import com.example.CRUD_List.Application.UseCase.ListarUsuariosUseCase;
 import com.example.CRUD_List.Application.UseCase.ObtenerUsuarioUseCase;
+import com.example.CRUD_List.Application.UseCase.ActualizarUsuarioUseCase;
+import com.example.CRUD_List.Application.UseCase.EliminarUsuarioUseCase;
 import com.example.CRUD_List.dominio.modelo.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,14 +25,20 @@ public class UsuarioController {
     private final CrearUsuarioUseCase crearUsuarioUseCase;
     private final ObtenerUsuarioUseCase obtenerUsuarioUseCase;
     private final ListarUsuariosUseCase listarUsuariosUseCase;
+    private final ActualizarUsuarioUseCase actualizarUsuarioUseCase;
+    private final EliminarUsuarioUseCase eliminarUsuarioUseCase;
 
     public UsuarioController(
             CrearUsuarioUseCase crearUsuarioUseCase, 
             ObtenerUsuarioUseCase obtenerUsuarioUseCase,
-            ListarUsuariosUseCase listarUsuariosUseCase) {
+            ListarUsuariosUseCase listarUsuariosUseCase,
+            ActualizarUsuarioUseCase actualizarUsuarioUseCase,
+            EliminarUsuarioUseCase eliminarUsuarioUseCase) {
         this.crearUsuarioUseCase = crearUsuarioUseCase;
         this.obtenerUsuarioUseCase = obtenerUsuarioUseCase;
         this.listarUsuariosUseCase = listarUsuariosUseCase;
+        this.actualizarUsuarioUseCase = actualizarUsuarioUseCase;
+        this.eliminarUsuarioUseCase = eliminarUsuarioUseCase;
     }
 
     @Operation(
@@ -138,5 +146,53 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listarTodos() {
         return listarUsuariosUseCase.ejecutar();
+    }
+
+    @Operation(
+            summary = "Actualizar un usuario existente",
+            description = "Actualiza los datos de un usuario específico usando su ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuario actualizado exitosamente",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuario no encontrado"
+            )
+    })
+    @PutMapping("/{id}")
+    public Usuario actualizar(
+            @Parameter(description = "ID único del usuario (UUID)", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id,
+            @RequestBody UsuarioRequest request) {
+        return actualizarUsuarioUseCase.ejecutar(id, request.getName(), request.getCargo(), request.getTelefono())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+    }
+
+    @Operation(
+            summary = "Eliminar un usuario",
+            description = "Elimina un usuario del sistema usando su ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuario eliminado exitosamente"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuario no encontrado"
+            )
+    })
+    @DeleteMapping("/{id}")
+    public void eliminar(
+            @Parameter(description = "ID único del usuario (UUID)", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id) {
+        boolean eliminado = eliminarUsuarioUseCase.ejecutar(id);
+        if (!eliminado) {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
     }
 }

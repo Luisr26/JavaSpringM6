@@ -1,5 +1,6 @@
 package com.example.CRUD_List.Application.UseCase;
-import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
+
+import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
 import com.example.CRUD_List.dominio.modelo.Usuario;
 
 import java.util.UUID;
