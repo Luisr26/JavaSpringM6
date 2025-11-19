@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.UsuarioRepositoryPort;
+import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
 
 @Service
 public class ListarUsuariosUseCase {
-    
+
     private final UsuarioRepositoryPort usuarioRepositorioPort;
 
     public ListarUsuariosUseCase(UsuarioRepositoryPort usuarioRepositorioPort) {
@@ -20,4 +20,3 @@ public class ListarUsuariosUseCase {
         return usuarioRepositorioPort.listarTodos();
     }
 }
-
