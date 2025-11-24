@@ -1,4 +1,4 @@
-package com.example.CRUD_List.infrastructure.AdaptadorPersistencia;
+package com.example.usuarios.infrastructure.AdaptadorPersistencia;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.example.CRUD_List;
+package com.example.usuarios;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

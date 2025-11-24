@@ -1,6 +1,6 @@
-package com.example.CRUD_List.dominio.puerto.in;
+package com.example.usuarios.dominio.puerto.in;
 
-import com.example.CRUD_List.dominio.modelo.Usuario;
+import com.example.usuarios.dominio.modelo.Usuario;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

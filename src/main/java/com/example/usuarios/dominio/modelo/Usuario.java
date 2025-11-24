@@ -1,4 +1,4 @@
-package com.example.CRUD_List.dominio.modelo;
+package com.example.usuarios.dominio.modelo;
 import java.util.UUID;
 import io.swagger.v3.oas.annotations.media.Schema;
 

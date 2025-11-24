@@ -1,11 +1,11 @@
-package com.example.CRUD_List.Application.UseCase;
+package com.example.usuarios.Application.UseCase;
 
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
+import com.example.usuarios.dominio.modelo.Usuario;
+import com.example.usuarios.dominio.puerto.out.UsuarioRepositoryPort;
 
 @Service
 public class CrearUsuarioUseCase {
