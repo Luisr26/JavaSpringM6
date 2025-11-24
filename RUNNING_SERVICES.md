@@ -10,17 +10,23 @@ Este proyecto contiene 3 microservicios independientes que comparten la misma ba
 
 ## Iniciar todos los microservicios automáticamente
 
-### Opción 1: Script Bash (Recomendado - Linux/Mac)
+### ✅ Opción 1: Comando Maven (Recomendado)
+
+```bash
+./mvnw spring-boot:run
+```
+
+¡Es así de simple! Este comando iniciará automáticamente los 3 microservicios en orden con un delay de 3 segundos entre cada uno.
+
+Para detener todos los servicios: presiona `Ctrl+C`
+
+### Opción 2: Script Bash directo
 
 ```bash
 ./start-all-services.sh
 ```
 
-Este script iniciará los 3 microservicios en orden con un delay de 3 segundos entre cada uno.
-
-Para detener todos los servicios: presiona `Ctrl+C`
-
-### Opción 2: Manualmente (uno por uno)
+### Opción 3: Manualmente (uno por uno)
 
 Abre **3 terminales diferentes** y ejecuta en cada una:
 
