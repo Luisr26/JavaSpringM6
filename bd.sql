@@ -1,6 +1,13 @@
+```sql
 -- DDL para MySQL / MySQL Workbench
--- Este archivo contiene la definición de la tabla `usuarios` pensada para ejecutarse en MySQL / MariaDB
--- Uso: abrir en MySQL Workbench y ejecutar. Si quieres UUIDs automáticos usa UUID() en los INSERTs.
+-- Este archivo contiene la definición de la tabla 'usuarios' pensada para ejecutarse en MySQL / MariaDB
+-- Usar MySQL Workbench y ejecutar: Sql > Execute (using MyISH) en los INSERTS automáticos usa UTF8MB4 y COLLATE=utf8mb4_unicode_ci;
+
+-- Crear la base de datos si no existe
+CREATE DATABASE IF NOT EXISTS JavaM6;
+
+-- Seleccionar la base de datos
+USE JavaM6;
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
