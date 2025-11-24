@@ -13,7 +13,7 @@ Este proyecto contiene 3 microservicios independientes que comparten la misma ba
 ### ✅ Opción 1: Comando Maven (Recomendado)
 
 ```bash
-./mvnw spring-boot:run
+./mvnw exec:exec
 ```
 
 ¡Es así de simple! Este comando iniciará automáticamente los 3 microservicios en orden con un delay de 3 segundos entre cada uno.
