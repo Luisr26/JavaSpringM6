@@ -74,36 +74,25 @@
 
     <build>
         <plugins>
+            <!-- Plugin para compilar el proyecto -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!-- Por defecto, ejecutar el script que lanza todos los microservicios -->
-                    <skip>true</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>run-all-microservices</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <skip>false</skip>
-                            <mainClass>none</mainClass>
-                            <executable>bash</executable>
-                            <arguments>
-                                <argument>start-all-services.sh</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             
-            <!-- Plugin exec para ejecutar el script de inicio -->
+            <!-- Plugin para ejecutar el script que inicia todos los microservicios -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>start-all-microservices</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <executable>bash</executable>
                     <arguments>
