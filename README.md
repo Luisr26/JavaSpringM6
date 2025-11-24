@@ -200,3 +200,4 @@ src/main/java/com/example/CRUD_List/
 - **HU-1**: Almacenamiento en memoria (Listas)
 - **HU-2**: Persistencia en base de datos MySQL
 - **HU-3**: Preparado para integración con frontend Angular ← **Estás aquí**
+6

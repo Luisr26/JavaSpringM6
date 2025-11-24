@@ -1,7 +1,7 @@
-package com.example.CRUD_List.Application.UseCase;
+package com.example.usuarios.Application.UseCase;
 
-import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
+import com.example.usuarios.dominio.modelo.Usuario;
+import com.example.usuarios.dominio.puerto.out.UsuarioRepositoryPort;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

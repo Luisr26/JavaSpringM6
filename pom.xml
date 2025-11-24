@@ -13,9 +13,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>CRUD_List</artifactId>
+    <artifactId>usuarios</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CRUD_List</name>
+    <name>usuarios</name>
     <description>Demo project for Spring Boot CRUD with JPA</description>
 
     <properties>

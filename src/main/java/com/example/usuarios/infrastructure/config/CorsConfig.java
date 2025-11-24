@@ -1,4 +1,4 @@
-package com.example.CRUD_List.infrastructure.config;
+package com.example.usuarios.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

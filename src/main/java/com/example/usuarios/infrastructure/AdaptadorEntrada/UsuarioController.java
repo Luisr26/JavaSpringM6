@@ -1,10 +1,10 @@
-package com.example.CRUD_List.infrastructure.AdaptadorEntrada;
-import com.example.CRUD_List.Application.UseCase.CrearUsuarioUseCase;
-import com.example.CRUD_List.Application.UseCase.ListarUsuariosUseCase;
-import com.example.CRUD_List.Application.UseCase.ObtenerUsuarioUseCase;
-import com.example.CRUD_List.Application.UseCase.ActualizarUsuarioUseCase;
-import com.example.CRUD_List.Application.UseCase.EliminarUsuarioUseCase;
-import com.example.CRUD_List.dominio.modelo.Usuario;
+package com.example.usuarios.infrastructure.AdaptadorEntrada;
+import com.example.usuarios.Application.UseCase.CrearUsuarioUseCase;
+import com.example.usuarios.Application.UseCase.ListarUsuariosUseCase;
+import com.example.usuarios.Application.UseCase.ObtenerUsuarioUseCase;
+import com.example.usuarios.Application.UseCase.ActualizarUsuarioUseCase;
+import com.example.usuarios.Application.UseCase.EliminarUsuarioUseCase;
+import com.example.usuarios.dominio.modelo.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,7 +1,7 @@
-package com.example.CRUD_List.infrastructure.AdaptadorPersistencia;
+package com.example.usuarios.infrastructure.AdaptadorPersistencia;
 
-import com.example.CRUD_List.dominio.modelo.Usuario;
-import com.example.CRUD_List.dominio.puerto.out.UsuarioRepositoryPort;
+import com.example.usuarios.dominio.modelo.Usuario;
+import com.example.usuarios.dominio.puerto.out.UsuarioRepositoryPort;
 
 import org.springframework.stereotype.Repository;
 
