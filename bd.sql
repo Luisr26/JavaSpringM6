@@ -1,4 +1,3 @@
-```sql
 -- DDL para MySQL / MySQL Workbench
 -- Este archivo contiene la definición de la tabla 'usuarios' pensada para ejecutarse en MySQL / MariaDB
 -- Usar MySQL Workbench y ejecutar: Sql > Execute (using MyISH) en los INSERTS automáticos usa UTF8MB4 y COLLATE=utf8mb4_unicode_ci;
@@ -96,4 +95,3 @@ INSERT INTO events (id, nombre, descripcion, fecha_inicio, fecha_fin, venue_id, 
 -- Ejemplo de cómo inscribir usuarios (ejecutar después de tener los datos):
 -- INSERT INTO event_inscriptions (id, event_id, usuario_id, fecha_inscripcion) VALUES
 --     (UUID(), 'ID_DEL_EVENTO', 'ID_DEL_USUARIO', NOW());
-```
