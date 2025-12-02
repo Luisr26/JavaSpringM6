@@ -1,0 +1,70 @@
+# Docker Compose para Backend Java Spring Boot + MySQL
+# Uso: docker-compose up -d
+
+services:
+  # ==================== APPLICATION ====================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: usuarios-api
+    ports:
+      - "8082:8080"
+    environment:
+      # Perfil de Spring
+      - SPRING_PROFILES_ACTIVE=docker
+      # Conexión a MySQL
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/JavaM6?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Qwe.123*
+      # JWT Configuration
+      - JWT_SECRET_KEY=dGhpc0lzQVNlY3VyZUtleUZvckpXVFRva2VuU2lnbmluZ1dpdGhIUzI1NkFsZ29yaXRobQ==
+      - JWT_EXPIRATION=900000
+      - JWT_REFRESH_EXPIRATION=604800000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ==================== DATABASE ====================
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Qwe.123*
+      MYSQL_DATABASE: JavaM6
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./bd.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - backend-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pQwe.123*"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    command: --default-authentication-plugin=mysql_native_password
+
+# ==================== VOLUMES ====================
+volumes:
+  mysql_data:
+    driver: local
+
+# ==================== NETWORKS ====================
+networks:
+  backend-network:
+    driver: bridge

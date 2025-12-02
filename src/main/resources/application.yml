@@ -1,0 +1,88 @@
+# ==================== CONFIGURACIÓN BASE ====================
+spring:
+  application:
+    name: usuarios-api
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+# Server Configuration
+server:
+  port: 8080
+
+# JWT Configuration (valores por defecto)
+jwt:
+  secret-key: ${JWT_SECRET_KEY:dGhpc0lzQVNlY3VyZUtleUZvckpXVFRva2VuU2lnbmluZ1dpdGhIUzI1NkFsZ29yaXRobQ==}
+  expiration: ${JWT_EXPIRATION:900000}
+  refresh-token:
+    expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+
+# Swagger / OpenAPI
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# Actuator para Health Checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+---
+# ==================== PERFIL LOCAL ====================
+spring:
+  config:
+    activate:
+      on-profile: local
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/JavaM6?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: Qwe.123*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8082
+
+---
+# ==================== PERFIL DOCKER ====================
+spring:
+  config:
+    activate:
+      on-profile: docker
+  
+  datasource:
+    url: jdbc:mysql://db:3306/JavaM6?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: Qwe.123*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+---
+# ==================== PERFIL MYSQL (compatibilidad) ====================
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/JavaM6?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: Qwe.123*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8082
